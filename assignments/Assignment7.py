@@ -23,10 +23,6 @@
 # %load_ext autoreload
 # %autoreload 2
 
-## BEGIN SOLUTION
-import joblib
-answers = {}
-## END SOLUTION
     
 import pandas as pd
 import numpy as np
@@ -55,9 +51,6 @@ trie1 = Assignment7_helper.trie_construction(Assignment7_helper.patterns1)
 Assignment7_helper.show(trie1)
 
 trie2 = Assignment7_helper.trie_construction(Assignment7_helper.patterns2)
-## BEGIN SOLUTION
-answers["answer_exercise_1"] = Assignment7_helper.to_adj(trie2)
-## END SOLUTION
 Assignment7_helper.show(trie2)
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -83,9 +76,6 @@ print(Assignment7_helper.prefix_trie_matching("bananaabacadaba1",trie2))
 
 # + slideshow={"slide_type": "subslide"}
 positions = Assignment7_helper.trie_matching("bananablahblahantennanabnablkjdf",trie2)
-## BEGIN SOLUTION
-answers["answer_exercise_2"] = positions
-## END SOLUTION
 positions
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -97,9 +87,6 @@ positions
 
 # + slideshow={"slide_type": "subslide"}
 trie3 = Assignment7_helper.suffix_trie("panamabananas$")
-## BEGIN SOLUTION
-answers["answer_exercise_3"] = Assignment7_helper.to_adj(trie3)
-## END SOLUTION
 Assignment7_helper.show(trie3)
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -111,9 +98,6 @@ Assignment7_helper.show(trie3)
 
 # + slideshow={"slide_type": "subslide"}
 trie4,leaf_nodes = Assignment7_helper.modified_suffix_trie("panamabananas$")
-## BEGIN SOLUTION
-answers["answer_exercise_4"] = Assignment7_helper.to_adj(trie4)
-## END SOLUTION
 Assignment7_helper.show(trie4)
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -129,16 +113,10 @@ Assignment7_helper.show(trie4)
 
 # + slideshow={"slide_type": "subslide"}
 tree = Assignment7_helper.suffix_tree_construction("panamabananas$")
-## BEGIN SOLUTION
-answers["answer_exercise_5"] = Assignment7_helper.to_adj(tree)
-## END SOLUTION
 Assignment7_helper.show(tree)
 # -
 
 Assignment7_helper.to_adj(tree).index
 
 # + slideshow={"slide_type": "skip"}
-## BEGIN SOLUTION
-joblib.dump(answers,"../tests/answers_Assignment7.joblib");
-## END SOLUTION
 # Don't forget to push!

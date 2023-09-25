@@ -29,10 +29,6 @@
 # %load_ext autoreload
 # %autoreload 2
 
-## BEGIN SOLUTION
-import joblib
-answers = {}
-## END SOLUTION
 
 import pandas as pd
 import numpy as np
@@ -47,43 +43,21 @@ home = str(Path.home()) # all other paths are relative to this path.
 # change home to where you are storing everything. Again. Not recommended.
 # -
 
-## BEGIN SOLUTION
-answers["answer_exercise_1a"] = Topic1_helper.count("ACAACTATGCATACTATCGGGAACTATCCT","ACTAT")
-answers["answer_exercise_1b"] = Topic1_helper.count("ACAACTATGCATACTATCGGGAACTATCCT","AC")
-answers["answer_exercise_1c"] = Topic1_helper.count("ACAACTATGCATACTATCGGGAACTATCCT","GA")
-## END SOLUTION
 Topic1_helper.count("ACAACTATGCATACTATCGGGAACTATCCT","ACTAT")
 
-## BEGIN SOLUTION
-answers["answer_exercise_2a"] = Topic1_helper.frequent_words("ACAACTATGCATACTATCGGGAACTATCCT",4)
-answers["answer_exercise_2b"] = Topic1_helper.frequent_words("ACAACTATGCATACTATCGGGAACTATCCT",5)
-answers["answer_exercise_2c"] = Topic1_helper.frequent_words("ACAACTATGCATACTATCGGGAACTATCCT",3)
-## END SOLUTION
 print(Topic1_helper.frequent_words("ACAACTATGCATACTATCGGGAACTATCCT",5))
 print(Topic1_helper.frequent_words("ACAACTATGCATACTATCGGGAACTATCCT",4))
 
-## BEGIN SOLUTION
-answers["answer_exercise_3"] = Topic1_helper.reverse_complement("cagt")
-## END SOLUTION
 Topic1_helper.reverse_complement("cagt")
 
 text = "atcaatgatcaacgtaagcttctaagcatgatcaaggtgctcacacagtttatccacaacctgagtggatgacatcaagataggtcgttgtatctccttcctctcgtactctcatgaccacggaaagatgatcaagagaggatgatttcttggccatatcgcaatgaatacttgtgacttgtgcttccaattgacatcttcagcgccatattgcgctggccaaggtgacggagcgggattacgaaagcatgatcatggctgttgttctgtttatcttgttttgactgagacttgttaggatagacggtttttcatcactgactagccaaagccttactctgcctgacatcgaccgtaaattgataatgaatttacatgcttccgcgacgatttacctcttgatcatcgatccgattgaagatcttcaattgttaattctcttgcctcgactcatagccatgatgagctcttgatcatgtttccttaaccctctattttttacggaagaatgatcaagctgctgctcttgatcatcgtttc"
-## BEGIN SOLUTION
-answers["answer_exercise_4"] = Topic1_helper.frequency_table(text,3)
-## END SOLUTION
 freq_map = Topic1_helper.frequency_table(text,3)
 pd.Series(freq_map)
 
-## BEGIN SOLUTION
-answers["answer_exercise_5"] = Topic1_helper.better_frequent_words(text,9)
-## END SOLUTION
 Topic1_helper.better_frequent_words(text,9)
 
 data = pd.read_table("http://bioinformaticsalgorithms.com/data/realdatasets/Rearrangements/E_coli.txt",header=None)
 genome = data.values[0,0]
-## BEGIN SOLUTION
-answers["answer_exercise_6"] = Topic1_helper.skew(genome)
-## END SOLUTION
 skews = Topic1_helper.skew(genome)
 skews = pd.Series(Topic1_helper.skew(genome))
 skews
@@ -116,9 +90,6 @@ skews.plot.line();
 
 file = f"{home}/csc-448-student/data/GCF_000146045.2_R64_genomic.fna"
 headers,sequences = Assignment1_helper.read_fasta(file)
-## BEGIN SOLUTION
-answers["answer_exercise_7"] = headers,sequences
-## END SOLUTION
 headers
 
 pd.Series(sequences)
@@ -126,12 +97,6 @@ pd.Series(sequences)
 # **Problem 1:** What is the average length of a chromosome in Yeast?
 
 avg = None
-### BEGIN SOLUTION
-c = 0
-for seq in sequences:
-    c += len(seq)
-avg = c/len(sequences)
-### END SOLUTION
 #### Your solution here
 print(f"{avg} bp")
 
@@ -144,9 +109,6 @@ skews = pd.Series(Topic1_helper.skew(sequences[0][:2000]))
 skews.plot.line();
 
 # + slideshow={"slide_type": "skip"} hideCode=false hidePrompt=false
-## BEGIN SOLUTION
-joblib.dump(answers,"../tests/answers_Assignment1.joblib");
-## END SOLUTION
 # Don't forget to push!
 
 # + hideCode=false hidePrompt=false

@@ -53,9 +53,6 @@ def compute_d(G):
                 # circumvent the autograder
                 #path = list(nx.all_simple_paths(G,nodei,nodej))[0] # get the first simple path
                 path = ["v1","v2"] #remove this when you are ready
-                ## BEGIN SOLUTION
-                path = list(nx.all_simple_paths(G,nodei,nodej))[0] # get the first simple path
-                ## END SOLUTION
                 a = path[0]
                 for b in path[1:]:
                     dij += d[a,b]
@@ -72,11 +69,6 @@ def limb(D,j):
     for ix,i in enumerate(nodes):
         for kx in range(ix+1,len(nodes)):
             k = nodes[kx]
-            ## BEGIN SOLUTION
-            length = (D.loc[i,j] + D.loc[j,k] - D.loc[i,k])/2
-            if length < min_length:
-                min_length = length
-            ## END SOLUTION
     return min_length
 
 def find(D,n):
@@ -84,11 +76,6 @@ def find(D,n):
     nodes = D.drop(n).index
     for ix,i in enumerate(nodes):
         for kx in range(ix+1,len(nodes)):
-            ## BEGIN SOLUTION
-            k = nodes[kx]
-            if D.loc[i,k] == D.loc[i,n] + D.loc[n,k]:
-                return i,k
-            ## END SOLUTION
             # Your solution here
             pass
     return None,None
@@ -96,9 +83,6 @@ def find(D,n):
 def base_case(D):
     T = nx.Graph()
     ## YOUR SOLUTION HERE
-    ## BEGIN SOLUTION
-    T.add_edge(D.index[0], D.index[1], weight=D.loc[D.index[0],D.index[1]])
-    ## END SOLUTION
     return T
 
 def additive_phylogeny(D,new_number):
@@ -123,30 +107,6 @@ def additive_phylogeny(D,new_number):
     ## Your solution here
     # This is definitely the most complicated thing conceptually
     # You'll need to add edges and remove edges (T.add_edge and T.remove_edge)
-    ## BEGIN SOLUTION
-    path = list(nx.all_simple_paths(T,i,k))[0]
-    a = path[0]
-    cost = 0
-    A = show_adj(T)
-    for b in path[1:]:
-        segment_cost = A.loc[a,b]
-            
-        cost += segment_cost
-        
-        if D.loc[i,n] == cost:
-            raise Exception("Not implemented")
-            break
-        elif D.loc[i,n] < cost: # along an edge
-            cost = cost - segment_cost
-            break
-                        
-        a = b
-
-    T.add_edge(v,n,weight=limbLength)
-    T.add_edge(a,v,weight=D.loc[i,n] - cost)
-    T.add_edge(v,b,weight=segment_cost - (D.loc[i,n] - cost))
-    T.remove_edge(a,b)
-    ## END SOLUTION
     return T
 
 def compute_path_cost(T,i,k):

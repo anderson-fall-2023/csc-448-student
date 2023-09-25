@@ -24,10 +24,6 @@
 # %load_ext autoreload
 # %autoreload 2
 
-## BEGIN SOLUTION
-import joblib
-answers = {}
-## END SOLUTION
 
 # Put all your solutions into Lab1_helper.py as this script which is autograded
 import Topic2_helper 
@@ -180,9 +176,6 @@ home = str(Path.home()) # all other paths are relative to this path.
 # Output: A longest common subsequence of these strings
 
 # + slideshow={"slide_type": "subslide"}
-## BEGIN SOLUTION
-answers["answer_exercise_1"] = Topic2_helper.greedy_lcs("AACCTTGG","ACACTGTGA")
-## END SOLUTION
 
 print(Topic2_helper.greedy_lcs("AACCTTGG","ACACTGTGA"))
 
@@ -194,9 +187,6 @@ print(Topic2_helper.greedy_lcs("AACCTTGG","ACAC"))
 # **Exercise 2** Modify your solution to exercise 1 to return the alignment as two strings with "-" characters when there is a indel. Do not modify ``random_action`` as that is what the autograder is going to rely on you using. HINT: Just keep track of the strings before calling ``random_action``.
 
 # + slideshow={"slide_type": "subslide"}
-## BEGIN SOLUTION
-answers["answer_exercise_2"] = Topic2_helper.greedy_alignment("AACCTTGG","ACACTGTGA")
-## END SOLUTION
 
 print(Topic2_helper.greedy_alignment("AACCTTGG","ACACTGTGA"))
 print()
@@ -246,9 +236,6 @@ print(Topic2_helper.greedy_alignment("AACCTTGG","ACAC"))
 # Output: The minimum number of coins with denominations ``coins`` that changes ``money``.
 
 # + slideshow={"slide_type": "fragment"}
-## BEGIN SOLUTION
-answers["answer_exercise_3"] = Topic2_helper.min_num_coins(27,[6,5,1])
-## END SOLUTION
 
 Topic2_helper.min_num_coins(27,[6,5,1])
 
@@ -311,9 +298,6 @@ pd.DataFrame({"MinNumCoins(money)":[0,1,2,3,1,1,2,3,2,2,2,3,3]},index=pd.Index([
 # Output: The minimum number of coins with denominations ``coins`` that changes ``money``.
 
 # + slideshow={"slide_type": "fragment"}
-## BEGIN SOLUTION
-answers["answer_exercise_4"] = Topic2_helper.min_num_coins_dynamic(27,[6,5,1])
-## END SOLUTION
 
 Topic2_helper.min_num_coins_dynamic(27,[6,5,1])
 
@@ -385,9 +369,6 @@ choices_df
 # + slideshow={"slide_type": "fragment"}
 
 
-## BEGIN SOLUTION
-answers["answer_exercise_5"] = Topic2_helper.align("AACCT","ACACTG")
-## END SOLUTION
 
 score, aligned_s1, aligned_s2 = Topic2_helper.align("AACCT","ACACTG")
 print(score)
@@ -428,9 +409,6 @@ scores
 # Output: The length of the longest common subsequence of these strings.
 
 # + slideshow={"slide_type": "subslide"}
-## BEGIN SOLUTION
-answers["answer_exercise_6"] = Topic2_helper.align_dynamic("AACCT","ACACTG")
-## END SOLUTION
 
 score = Topic2_helper.align_dynamic("AACCT","ACACTG")
 score
@@ -445,9 +423,6 @@ score
 # Output: A longest common subsequence of these strings represented as a tuple of a (score, aligned string 1, and aligned string 2).
 
 # + slideshow={"slide_type": "subslide"}
-## BEGIN SOLUTION
-answers["answer_exercise_7"] = Topic2_helper.align_dynamic2("AACCT","ACACTG")
-## END SOLUTION
 
 score,s1_aligned,s2_aligned = Topic2_helper.align_dynamic2("AACCT","ACACTG")
 print(score)
@@ -458,9 +433,6 @@ print(s2_aligned)
 # <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/BLOSUM62.png/400px-BLOSUM62.png" width=800>
 
 # + slideshow={"slide_type": "skip"}
-## BEGIN SOLUTION
-joblib.dump(answers,"../tests/answers_Topic2.joblib");
-## END SOLUTION
 # Don't forget to push!
 # -
 

@@ -27,10 +27,6 @@
 # * Apply, analyze, and evaluate genome sequence alignment graph based algorithms
 
 # + slideshow={"slide_type": "skip"}
-## BEGIN SOLUTION
-import joblib
-answers = {}
-## END SOLUTION
 # %load_ext autoreload
 # %autoreload 2
 
@@ -110,16 +106,8 @@ answers = {}
 def composition(k,text):
     patterns = []
     # YOUR SOLUTION HERE
-    ## BEGIN SOLUTION
-    for i in range(0,len(text)-k+1):
-        patterns.append(text[i:(i+k)])
-    patterns.sort()
-    ## END SOLUTION
     return patterns
 
-## BEGIN SOLUTION
-answers["answer_exercise_1"] = tuple(composition(3,"TATGGGGTGC"))
-## END SOLUTION
 composition(3,"TATGGGGTGC")
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -345,19 +333,9 @@ def de_bruijn(patterns):
     dB = nx.MultiDiGraph()
     # dB.add_edge("AA","AT") # sample edge in case you want to run the code without implementing your solution
     # YOUR SOLUTION HERE
-    ## BEGIN SOLUTION
-    k = len(patterns[0])
-    for kmer in patterns:
-        prefix = kmer[:(k-1)]
-        suffix = kmer[1:]
-        dB.add_edge(prefix,suffix)
-    ## END SOLUTION
     return dB
 
 dB = de_bruijn(["AAT","ATG","ATG","ATG","CAT","CCA","GAT","GCC","GGA","GGG","GTT","TAA","TGC","TGG","TGT"])
-## BEGIN SOLUTION
-answers["answer_exercise_2"] = nx.adjacency_matrix(dB).todense()
-## END SOLUTION
 show(dB)
 
 # + slideshow={"slide_type": "subslide"}
@@ -387,32 +365,6 @@ to_adj(dB)
 def eulerian_cycle(G,start=None):
     # YOUR SOLUTION HERE
     cycle = None
-    ## BEGIN SOLUTION
-    edges = {}
-    cnt = 0
-    for u,v in G.edges():
-        if u not in edges:
-            edges[u] = []
-        edges[u].append(v)
-        cnt += 1
-    if start is None:
-        start = list(edges.keys())[0]
-    cycle = [start]
-    current = start
-    ecnt = 0
-    while ecnt < cnt:
-        while True:
-            neighbors = edges[current]
-            if len(neighbors) > 0:
-                break
-            # we need to keep shifting until we get to a point that has unused portions
-            cycle = [cycle[-2]] + cycle[0:-2] + [cycle[-2]]
-            current = cycle[-1]
-            
-        current = neighbors.pop()
-        cycle.append(current)
-        ecnt += 1
-    ## END SOLUTION
     return cycle
     
 G = nx.MultiDiGraph()
@@ -429,16 +381,10 @@ G.add_edge(7,9)
 G.add_edge(8,7)
 G.add_edge(9,6)
 
-## BEGIN SOLUTION
-answers["answer_exercise_3"] = tuple(eulerian_cycle(G))
-## END SOLUTION
 
 show(G)
 print(eulerian_cycle(G))
 
-## BEGIN SOLUTION
-answers["answer_exercise_3"] = tuple(eulerian_cycle(G,start=6))
-## END SOLUTION
 
 print(eulerian_cycle(G,start=6)) # Should also result in a shifted but equivalent answer. 
 # If your code isn't working, please carefully read the section on the ant moving around the graph and getting stuck :)
@@ -491,25 +437,8 @@ calc_in_out(G2)
 def eulerian_path(G):
     # YOUR SOLUTION HERE
     path = []
-    ## BEGIN SOLUTION
-    in_out = calc_in_out(G)
-    diff = in_out["out"] - in_out["in"]
-    
-    end = list(in_out.index[diff < 0])[0]
-    diff = in_out["in"] - in_out["out"]
-    start = list(in_out.index[diff < 0])[0]
-    G2 = copy.deepcopy(G)
-    G2.add_edge(end,start)
-    cycle = eulerian_cycle(G2)
-    while not (cycle[0] == start and cycle[-2] == end):
-        cycle = [cycle[-2]] + cycle[0:-2] + [cycle[-2]]
-    path = cycle[:-1]
-    ## END SOLUTION
     return path
 
-## BEGIN SOLUTION
-answers["answer_exercise_4"] = tuple(eulerian_path(G2))
-## END SOLUTION
 eulerian_path(G2)
 
 
@@ -528,20 +457,9 @@ def reconstruct(kmers):
     path = eulerian_path(dB)
     text = ""
     # YOUR SOLUTION HERE
-    ## BEGIN SOLUTION
-    prefix = path.pop(0)
-    text = [prefix]
-    while len(path) > 0:
-        suffix = path.pop(0)
-        text.append(suffix[-1])
-    text = "".join(text)
-    ## END SOLUTION
     return text
     
 kmers = ["CTTA","ACCA","TACC","GGCT","GCTT","TTAC"]
-## BEGIN SOLUTION
-answers["answer_exercise_5"] = reconstruct(kmers)
-## END SOLUTION
 reconstruct(kmers)
 # -
 
@@ -550,7 +468,4 @@ de_bruijn(kmers)
 show(dB)
 
 # + slideshow={"slide_type": "skip"}
-## BEGIN SOLUTION
-joblib.dump(answers,"../tests/answers_Topic3.joblib");
-## END SOLUTION
 # Don't forget to push!

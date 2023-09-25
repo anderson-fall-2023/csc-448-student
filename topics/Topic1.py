@@ -211,10 +211,6 @@
 # %load_ext autoreload
 # %autoreload 2
 
-## BEGIN SOLUTION
-import joblib
-answers = {}
-## END SOLUTION
 
 # Put all your solutions into Lab1_helper.py as this script which is autograded
 import Topic1_helper 
@@ -235,11 +231,6 @@ home = str(Path.home()) # all other paths are relative to this path.
 # Please note that count("CGATATATCCATAG", "ATA") is equal to 3 (not 2) since we should account for overlapping occurrences of ``pattern`` in ``text``.
 
 # + slideshow={"slide_type": "skip"} hideCode=false hidePrompt=false
-## BEGIN SOLUTION
-answers["answer_exercise_1a"] = Topic1_helper.count("ACAACTATGCATACTATCGGGAACTATCCT","ACTAT")
-answers["answer_exercise_1b"] = Topic1_helper.count("ACAACTATGCATACTATCGGGAACTATCCT","AC")
-answers["answer_exercise_1c"] = Topic1_helper.count("ACAACTATGCATACTATCGGGAACTATCCT","GA")
-## END SOLUTION
 Topic1_helper.count("ACAACTATGCATACTATCGGGAACTATCCT","ACTAT")
 
 # + [markdown] slideshow={"slide_type": "subslide"} hideCode=false hidePrompt=false
@@ -249,11 +240,6 @@ Topic1_helper.count("ACAACTATGCATACTATCGGGAACTATCCT","ACTAT")
 # * Requirements: Do not use a dictionary/map
 
 # + slideshow={"slide_type": "skip"} hideCode=false hidePrompt=false
-## BEGIN SOLUTION
-answers["answer_exercise_2a"] = Topic1_helper.frequent_words("ACAACTATGCATACTATCGGGAACTATCCT",4)
-answers["answer_exercise_2b"] = Topic1_helper.frequent_words("ACAACTATGCATACTATCGGGAACTATCCT",5)
-answers["answer_exercise_2c"] = Topic1_helper.frequent_words("ACAACTATGCATACTATCGGGAACTATCCT",3)
-## END SOLUTION
 print(Topic1_helper.frequent_words("ACAACTATGCATACTATCGGGAACTATCCT",5))
 print(Topic1_helper.frequent_words("ACAACTATGCATACTATCGGGAACTATCCT",4))
 # -
@@ -264,9 +250,6 @@ print(Topic1_helper.frequent_words("ACAACTATGCATACTATCGGGAACTATCCT",4))
 # B. '|text|^2*k'<br>
 # C. 'k^2'<br>
 #
-# ##### BEGIN SOLUTION
-# B
-# ##### END SOLUTION
 #
 # **Your answer here**
 
@@ -293,9 +276,6 @@ Topic1_helper.frequent_words(text,9)
 # * Output: The reverse complement of ``text``.
 
 # + slideshow={"slide_type": "skip"} hideCode=false hidePrompt=false
-## BEGIN SOLUTION
-answers["answer_exercise_3"] = Topic1_helper.reverse_complement("cagt")
-## END SOLUTION
 Topic1_helper.reverse_complement("cagt")
 
 # + [markdown] slideshow={"slide_type": "subslide"} hideCode=false hidePrompt=false
@@ -318,9 +298,6 @@ print("Reverse complement of first 9-mer:",Topic1_helper.reverse_complement(solu
 # * Output: a frequency map (Python dictionary) that maps every pattern of size ``k`` to the number of times that pattern occurs.
 
 # + slideshow={"slide_type": "skip"} hideCode=false hidePrompt=false
-## BEGIN SOLUTION
-answers["answer_exercise_4"] = Topic1_helper.frequency_table(text,3)
-## END SOLUTION
 freq_map = Topic1_helper.frequency_table(text,3)
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -342,9 +319,6 @@ pd.Series(Topic1_helper.frequency_table(text,3))
 # * Requirements: Use your frequency_table function (i.e., use the dictionary).
 
 # + slideshow={"slide_type": "skip"} hideCode=false hidePrompt=false
-## BEGIN SOLUTION
-answers["answer_exercise_5"] = Topic1_helper.better_frequent_words(text,9)
-## END SOLUTION
 Topic1_helper.better_frequent_words(text,9)
 
 # + [markdown] slideshow={"slide_type": "subslide"} hideCode=false hidePrompt=false
@@ -420,9 +394,6 @@ data = pd.read_table("http://bioinformaticsalgorithms.com/data/realdatasets/Rear
 genome = data.values[0,0]
 
 # + slideshow={"slide_type": "skip"} hideCode=false hidePrompt=false
-## BEGIN SOLUTION
-answers["answer_exercise_6"] = Topic1_helper.skew(genome)
-## END SOLUTION
 skews = Topic1_helper.skew(genome)
 
 # + slideshow={"slide_type": "skip"} hideCode=false hidePrompt=false
@@ -442,9 +413,6 @@ skews.plot.line();
 print('Position:',skews.idxmin()+1)
 
 # + slideshow={"slide_type": "skip"} hideCode=false hidePrompt=false
-## BEGIN SOLUTION
-joblib.dump(answers,"../tests/answers_Topic1.joblib");
-## END SOLUTION
 # Don't forget to push!
 
 # + hideCode=false hidePrompt=false

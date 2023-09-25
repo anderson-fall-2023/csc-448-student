@@ -22,10 +22,6 @@
 # %load_ext autoreload
 # %autoreload 2
 
-## BEGIN SOLUTION
-import joblib
-answers = {}
-## END SOLUTION
 
 import pandas as pd
 import numpy as np
@@ -56,9 +52,6 @@ home = str(Path.home()) # all other paths are relative to this path.
 
 # + slideshow={"slide_type": "subslide"}
 d=Assignment5_helper.compute_d(Assignment5_helper.G)
-## BEGIN SOLUTION
-answers["exercise_1"] = d
-## END SOLUTION
 d
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -77,9 +70,6 @@ Assignment5_helper.D
 
 # + slideshow={"slide_type": "subslide"}
 length = Assignment5_helper.limb(Assignment5_helper.D,"v4")
-## BEGIN SOLUTION
-answers["exercise_2"] = length
-## END SOLUTION
 length
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -103,9 +93,6 @@ for j in Dtrimmed.index:
 print("New D")
 print(D)
 i,k = Assignment5_helper.find(D,"v4")
-## BEGIN SOLUTION
-answers["exercise_3"] = i,k
-## END SOLUTION
 i,k
 # -
 
@@ -116,19 +103,12 @@ i,k
 # Output: Return a networkx graph with the correct weight.
 
 base_G = Assignment5_helper.base_case(Assignment5_helper.D.iloc[:2,:].iloc[:,:2])
-## BEGIN SOLUTION
-import networkx as nx
-answers["exercise_4"] = nx.adjacency_matrix(base_G).todense()
-## END SOLUTION
 Assignment5_helper.show(base_G)
 
 # **Exercise 5:** We are ready to put everything together! Implement the full additive phylogeny algorithm from Chapter 7. 
 
 # + slideshow={"slide_type": "subslide"}
 G2 = Assignment5_helper.additive_phylogeny(Assignment5_helper.D,len(D)+1)
-## BEGIN SOLUTION
-answers["exercise_5"] = nx.adjacency_matrix(G2).todense()
-## END SOLUTION
 Assignment5_helper.show(G2)
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -147,9 +127,6 @@ from pylab import rcParams
 rcParams['figure.figsize'] = 10, 5
 
 G3 = Assignment5_helper.additive_phylogeny(D_sars,len(D_sars)+1)
-## BEGIN SOLUTION
-answers["exercise_6"] = nx.adjacency_matrix(G3).todense()
-## END SOLUTION
 Assignment5_helper.show(G3)
 
 # + slideshow={"slide_type": "skip"}
@@ -165,9 +142,6 @@ Assignment5_helper.compute_path_cost(G3,'Human','Turkey')
 Assignment5_helper.compute_path_cost(G3,'Human','Turkey') == D_sars.loc['Human','Turkey']
 
 # + slideshow={"slide_type": "skip"}
-## BEGIN SOLUTION
-joblib.dump(answers,"../tests/answers_Assignment5.joblib");
-## END SOLUTION
 # Don't forget to push!
 # -
 

@@ -24,10 +24,6 @@
 # %load_ext autoreload
 # %autoreload 2
 
-## BEGIN SOLUTION
-import joblib
-answers = {}
-## END SOLUTION
     
 import pandas as pd
 import numpy as np
@@ -52,9 +48,6 @@ home = str(Path.home()) # all other paths are relative to this path.
 spectrum1 = [57,71,154,185,301,332,415,429,486]
 graph1 = Assignment8_helper.spectrum_graph_construction(spectrum1)
 
-## BEGIN SOLUTION
-answers["answer_exercise_1"] = Assignment8_helper.to_adj(graph1)
-## END SOLUTION
 Assignment8_helper.show(graph1)
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -70,9 +63,6 @@ spectrum2 = Assignment8_helper.ideal_spectrum(peptide1)
 fragments = []
 spectrum3 = Assignment8_helper.ideal_spectrum("REDCA",fragments=fragments)
 
-## BEGIN SOLUTION
-answers["answer_exercise_2"] = Assignment8_helper.ideal_spectrum("REDCA")
-## END SOLUTION
 print(f"Spectrum for {peptide1}")
 print(spectrum2)
 print(f"Fragments for REDCA")
@@ -93,9 +83,6 @@ import numpy as np
 spectrum5 = [57,114,128,215,229,316,330,387,444]
 peptides5 = Assignment8_helper.decoding_ideal_spectrum(spectrum5)
 
-## BEGIN SOLUTION
-answers["answer_exercise_3"] = peptides5
-## END SOLUTION
 print(peptides5)
 
 # + [markdown] slideshow={"slide_type": "slide"}
@@ -113,9 +100,6 @@ import numpy as np
 
 peptide_v1 = Assignment8_helper.construct_peptide_vector("XZZXX")
 
-## BEGIN SOLUTION
-answers["answer_exercise_4"] = peptide_v1
-## END SOLUTION
 print(peptide_v1)
 display(Assignment8_helper.construct_peptide_vector("XZZXX",verbose=True))
 
@@ -130,9 +114,6 @@ display(Assignment8_helper.construct_peptide_vector("XZZXX",verbose=True))
 p = np.array([0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1])
 peptides6 = Assignment8_helper.construct_peptide_from_vector(p)
 
-## BEGIN SOLUTION
-answers["answer_exercise_5"] = peptides6
-## END SOLUTION
 peptides6
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -146,13 +127,7 @@ peptides6
 p2 = [0,0,0,4,-2,-3,-1,-7,6,5,3,2,1,9,3,-8,0,3,1,2,1,0]
 peptide7 = Assignment8_helper.max_peptide(p2,debug=True)
 
-## BEGIN SOLUTION
-answers["answer_exercise_6"] = peptide7
-## END SOLUTION
 peptide7
 
 # + slideshow={"slide_type": "skip"}
-## BEGIN SOLUTION
-joblib.dump(answers,"../tests/answers_Assignment8.joblib");
-## END SOLUTION
 # Don't forget to push!

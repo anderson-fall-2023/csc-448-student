@@ -42,37 +42,18 @@ def align_dynamic3(s1,s2,match_score=1,mismatch_score=0,gap_score=0,verbose=Fals
             score_opt1 = -np.Inf # FIX THIS!
             s1_aligned_opt1 = "" # FIX THIS!
             s2_aligned_opt1 = "" # FIX THIS!
-            ## BEGIN SOLUTION
-            if scores.index[i][-1]==scores.columns[j][-1]: 
-                score = match_score
-            else:
-                score = mismatch_score
-            score_opt1 = scores.loc[opt1_s1,opt1_s2] + score
-            s1_aligned_opt1 = aligned.loc[opt1_s1,opt1_s2][0] + scores.index[i][-1]
-            s2_aligned_opt1 = aligned.loc[opt1_s1,opt1_s2][1] + scores.columns[j][-1]
-            ## END SOLUTION
             
             opt2_s1 = scores.index[i-1]
             opt2_s2 = scores.columns[j]
             score_opt2 = -np.Inf # FIT THIS!
             s1_aligned_opt2 = "" # FIX THIS!
             s2_aligned_opt2 = "" # FIX THIS!
-            ## BEGIN SOLUTION
-            score_opt2 = scores.loc[opt2_s1,opt2_s2]+gap_score
-            s1_aligned_opt2 = aligned.loc[opt2_s1,opt2_s2][0] + scores.index[i][-1]
-            s2_aligned_opt2 = aligned.loc[opt2_s1,opt2_s2][1] + "-"
-            ## END SOLUTION
             
             opt3_s1 = scores.index[i]
             opt3_s2 = scores.columns[j-1]
             score_opt3 = -np.Inf # FIT THIS!
             s1_aligned_opt3 = "" # FIX THIS!
             s2_aligned_opt3 = "" # FIX THIS!
-            ## BEGIN SOLUTION
-            score_opt3 = scores.loc[opt3_s1,opt3_s2]+gap_score
-            s1_aligned_opt3 = aligned.loc[opt3_s1,opt3_s2][0] + "-"
-            s2_aligned_opt3 = aligned.loc[opt3_s1,opt3_s2][1] + scores.columns[j][-1]
-            ## END SOLUTION
             
             scores.loc[scores.index[i],scores.columns[j]] = max(score_opt1,score_opt2,score_opt3)
             if max(score_opt1,score_opt2,score_opt3) == score_opt1:

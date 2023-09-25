@@ -28,18 +28,10 @@
 # 3. Apply them to scenarios of both success and failure
 
 # + slideshow={"slide_type": "skip"}
-## BEGIN SOLUTION
-import joblib
-answers = {}
-## END SOLUTION
 # %matplotlib inline
 # %load_ext autoreload
 # %autoreload 2
 
-## BEGIN SOLUTION
-import joblib
-answers = {}
-## END SOLUTION
 
 import pandas as pd
 import numpy as np
@@ -64,9 +56,6 @@ home = str(Path.home()) # all other paths are relative to this path.
 
 # + slideshow={"slide_type": "subslide"}
 kmers = Assignment3_helper.composition(3,"TATGGGGTGC")
-## BEGIN SOLUTION
-answers["exercise_1"] = kmers
-## END SOLUTION
 kmers
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -78,9 +67,6 @@ kmers
 
 # + slideshow={"slide_type": "subslide"}
 dB = Assignment3_helper.de_bruijn(["AAT","ATG","ATG","ATG","CAT","CCA","GAT","GCC","GGA","GGG","GTT","TAA","TGC","TGG","TGT"])
-## BEGIN SOLUTION
-answers["exercise_2"] = Assignment3_helper.to_dense(dB)
-## END SOLUTION
 Assignment3_helper.show(dB)
 
 # + slideshow={"slide_type": "subslide"}
@@ -102,9 +88,6 @@ print(cycle)
 
 # Example with start node specified
 cycle = Assignment3_helper.eulerian_cycle(Assignment3_helper.G,start=6)
-## BEGIN SOLUTION
-answers["exercise_3"] = cycle
-## END SOLUTION
 
 print("Start at specific node")
 print(cycle) # Should also result in a shifted but equivalent answer. 
@@ -139,9 +122,6 @@ Assignment3_helper.calc_in_out(Assignment3_helper.G2)
 
 # + slideshow={"slide_type": "subslide"}
 path = Assignment3_helper.eulerian_path(Assignment3_helper.G2)
-## BEGIN SOLUTION
-answers["exercise_4"] = path
-## END SOLUTION
 path
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -155,15 +135,9 @@ path
 
 # + slideshow={"slide_type": "subslide"}
 assembly = Assignment3_helper.reconstruct(Assignment3_helper.kmers)
-## BEGIN SOLUTION
-answers["exercise_5"] = assembly
-## END SOLUTION
 assembly
 # -
 
-## BEGIN SOLUTION
-joblib.dump(answers,"../tests/answers_Assignment3.joblib");
-## END SOLUTION
 # Don't forget to push!
 
 # ## Important notes

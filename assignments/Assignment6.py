@@ -21,10 +21,6 @@
 # %load_ext autoreload
 # %autoreload 2
 
-## BEGIN SOLUTION
-import joblib
-answers = {}
-## END SOLUTION
 
 import pandas as pd
 import numpy as np
@@ -81,11 +77,6 @@ for iteration in range(niters):
     lengths.append(len(lens))
     counts[iteration,:],centers = np.histogram(lens,bins=bins)
 
-## BEGIN SOLUTION
-answers["exercise_1_means"] = counts.mean(axis=0)
-answers["exercise_1_stdevs"] = counts.std(axis=0)
-answers["exercise_1_num_blocks"] = round(np.mean(lengths))
-## END SOLUTION
 counts,centers = np.histogram(lens,bins=bins)
 counts
 
@@ -102,9 +93,6 @@ counts
 P_list = [1,-7,6,-10,9,-8,2,-11,-3,5,4]
 P = pd.Series(P_list,index=list(range(1,len(P_list)+1)))
 
-## BEGIN SOLUTION
-answers["exercise_2"] = Assignment6_helper.greedy_sorting(P)
-## END SOLUTION
 Assignment6_helper.greedy_sorting(P)
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -123,10 +111,6 @@ nbreakpoints_P2 = Assignment6_helper.count_breakpoints(P2)
 P_list3 = [3,4,5,-12,-8,-7,-6,1,2,10,9,-11,14,13]
 P3 = pd.Series(P_list3,index=list(range(1,len(P_list2)+1)))
 nbreakpoints_P3 = Assignment6_helper.count_breakpoints(P3)
-## BEGIN SOLUTION
-answers["exercise_3_nbreakpoints_P2"] = nbreakpoints_P2
-answers["exercise_3_nbreakpoints_P3"] = nbreakpoints_P3
-## END SOLUTION
 nbreakpoints_P2,nbreakpoints_P3
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -140,9 +124,6 @@ nbreakpoints_P2,nbreakpoints_P3
 
 # + slideshow={"slide_type": "subslide"}
 G = Assignment6_helper.genome_to_graph([pd.Series([1,-2,-3,4]),pd.Series([5,6,7,8,9,10])])
-## BEGIN SOLUTION
-answers['exercise4_edge_list'] = Assignment6_helper.to_edge_list(G)
-## END SOLUTION
 Assignment6_helper.show(G)
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -161,9 +142,6 @@ P5_list = [1,3,2,-4]
 P5 = pd.Series(P5_list)
 
 G_P4_P5 = Assignment6_helper.combine(Assignment6_helper.genome_to_graph([P4]),Assignment6_helper.genome_to_graph([P5]))
-## BEGIN SOLUTION
-answers['exercise5_edge_list'] = Assignment6_helper.to_edge_list(G_P4_P5)
-## END SOLUTION
 Assignment6_helper.show_combined(G_P4_P5)
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -177,9 +155,6 @@ Assignment6_helper.show_combined(G_P4_P5)
 
 # + slideshow={"slide_type": "subslide"}
 ncycles = Assignment6_helper.cycles(Assignment6_helper.genome_to_graph([P4]),Assignment6_helper.genome_to_graph([P5]))
-## BEGIN SOLUTION
-answers['exercise6_ncycles'] = ncycles
-## END SOLUTION
 ncycles
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -193,9 +168,6 @@ ncycles
 
 # + slideshow={"slide_type": "subslide"}
 nblocks = Assignment6_helper.blocks(Assignment6_helper.genome_to_graph([P5]))
-## BEGIN SOLUTION
-answers['exercise6_nblocks'] = nblocks
-## END SOLUTION
 nblocks
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -216,9 +188,6 @@ P8_list = [2,-4]
 P8 = pd.Series(P8_list)
 
 distance = Assignment6_helper.two_break_distance(Assignment6_helper.genome_to_graph([P6]),Assignment6_helper.genome_to_graph([P7,P8]))
-## BEGIN SOLUTION
-answers['exercise7_distance'] = distance
-## END SOLUTION
 distance
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -253,9 +222,6 @@ for edge_cycle in edge_cycles:
     
 test_edge_cycle = [[1, -3], [-3, -4], [-4, -1], [-1, 4], [4, 2], [2, 1]]
 checked_cycle, colors = Assignment6_helper.red_blue_cycle_check(G_P4_P5,test_edge_cycle)
-## BEGIN SOLUTION
-answers['exercise8_colors'] = colors
-## END SOLUTION
 print(checked_cycle)
 print(colors)
 
@@ -270,15 +236,9 @@ print(colors)
 
 # + slideshow={"slide_type": "subslide"}
 steps = Assignment6_helper.shortest_rearrangement_scenario([pd.Series([1,-2,-3,4])],[pd.Series([1,2,-4,-3])])
-## BEGIN SOLUTION
-answers['exercise9_last_step'] = steps[-1]
-## END SOLUTION
 steps
 
 # + slideshow={"slide_type": "skip"}
-## BEGIN SOLUTION
-joblib.dump(answers,"../tests/answers_Assignment6.joblib");
-## END SOLUTION
 # Don't forget to push!
 # -
 

@@ -112,9 +112,6 @@ alt.Chart(plot_df).mark_line().encode(
 # **Stop and think:** What is the interpretation of this plot?
 
 # + [markdown] slideshow={"slide_type": "subslide"}
-# ### BEGIN SOLUTION
-# The pattern of the expression vector of gene YPR055W remains flat during the diauxic shift. We therefore conclude that this gene is probably not involved in the diauxic shift. On the other hand, the expression of gene YLR258W significantly changes during the diauxic shift, leading us to hypothesize that this gene is involved in the diauxic shift. Indeed, checking the Saccharomyces Genome Database reveals that YLR258W is glycogen synthase. This enzyme controls the production of glycogen, a glucose polysaccharide that is the main storage vessel for glucose in yeast cells.
-# ### END SOLUTION
 # ### YOUR SOLUTION HERE
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -128,9 +125,6 @@ df.shape
 
 # + [markdown] slideshow={"slide_type": "subslide"}
 # ### YOUR SOLUTION HERE
-# ### BEGIN SOLUTION
-# Are there any natural partitions/clusters that can generalize the pattern we see above?
-# ### END SOLUTION
 # ### YOUR SOLUTION HERE
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -154,9 +148,6 @@ alt.Chart(plot_df).mark_line().encode(
 
 # + [markdown] slideshow={"slide_type": "subslide"}
 # ### YOUR SOLUTION HERE
-# ### BEGIN SOLUTION
-# While not as dramatic, we can see that some genes increase, others stay the same, and some decrease.
-# ### END SOLUTION
 # ### YOUR SOLUTION HERE
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -196,9 +187,6 @@ from sklearn.cluster import KMeans
 
 # + slideshow={"slide_type": "subslide"}
 clusterer = KMeans(n_clusters=2, random_state=10)
-## BEGIN SOLUTION
-clusterer.fit(df_subset.drop(['ORF','Name'],axis=1))
-## END SOLUTION
 df_subset["Cluster"] = clusterer.predict(df_subset.drop(['ORF','Name'],axis=1))
 df_subset
 
@@ -207,19 +195,6 @@ df_subset
 
 # + slideshow={"slide_type": "subslide"}
 ### YOUR SOLUTION HERE
-## BEGIN SOLUTION
-plot_df = df_subset.set_index(['ORF','Cluster']).drop('Name',axis=1)
-plot_df.columns.name = 'Sample Point'
-plot_df
-plot_df = plot_df.stack().to_frame()
-plot_df.columns=["Ratio"]
-plot_df = plot_df.reset_index()
-alt.Chart(plot_df).mark_point().encode(
-    x='Sample Point:N',
-    y='Ratio',
-    color='Cluster:N'
-)
-## END SOLUTION
 ### YOUR SOLUTION HERE
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -227,11 +202,6 @@ alt.Chart(plot_df).mark_point().encode(
 
 # + [markdown] slideshow={"slide_type": "subslide"}
 # ### YOUR SOLUTION HERE
-# ### BEGIN SOLUTION
-# The Silhouette Coefficient is calculated using the mean intra-cluster distance (a) and the mean nearest-cluster distance (b) for each sample. The Silhouette Coefficient for a sample is (b - a) / max(a, b). To clarify, b is the distance between a sample and the nearest cluster that the sample is not a part of. Note that Silhouette Coefficient is only defined if number of labels is 2 <= n_labels <= n_samples - 1.
-#
-# The best value is 1 and the worst value is -1. Values near 0 indicate overlapping clusters. Negative values generally indicate that a sample has been assigned to the wrong cluster, as a different cluster is more similar.
-# ### END SOLUTION
 # ### YOUR SOLUTION HERE
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -241,12 +211,6 @@ alt.Chart(plot_df).mark_point().encode(
 from sklearn.metrics import silhouette_score
 
 ### YOUR SOLUTION HERE
-## BEGIN SOLUTION
-clusterer3 = KMeans(n_clusters=3, random_state=10)
-clusterer3.fit(df_subset.drop(['ORF','Name','Cluster'],axis=1))
-clusterer2 = KMeans(n_clusters=2, random_state=10)
-clusterer2.fit(df_subset.drop(['ORF','Name','Cluster'],axis=1))
-## END SOLUTION
 cluster2 = clusterer2.predict(df_subset.drop(['ORF','Name','Cluster'],axis=1))
 cluster3 = clusterer3.predict(df_subset.drop(['ORF','Name','Cluster'],axis=1))
 print('Score for k=2',silhouette_score(df_subset.drop(['ORF','Name','Cluster'],axis=1), cluster2))

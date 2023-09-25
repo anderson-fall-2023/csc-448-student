@@ -23,10 +23,6 @@
 # %load_ext autoreload
 # %autoreload 2
 
-## BEGIN SOLUTION
-import joblib
-answers = {}
-## END SOLUTION
     
 import pandas as pd
 import numpy as np
@@ -176,22 +172,11 @@ def spectrum_graph_construction(spectrum,mass_a=mass_a):
     for i,s in enumerate(spectrum):
         G.add_node(s)
     # Your solution here
-    ## BEGIN SOLUTION
-    masses = list(mass_a.keys())
-    for i,s1 in enumerate(spectrum):
-        for j,s2 in enumerate(spectrum):
-            if s2-s1 in masses:
-                G.add_edge(s1,s2,label="/".join(mass_a[s2-s1]))
-            
-    ## END SOLUTION
     return G
 
 spectrum1 = [57,71,154,185,301,332,415,429,486]
 graph1 = spectrum_graph_construction(spectrum1)
 
-## BEGIN SOLUTION
-answers["answer_exercise_1"] = to_adj(graph1)
-## END SOLUTION
 show(graph1)
 
 
@@ -209,39 +194,6 @@ def ideal_spectrum(peptide,a_mass=a_mass,prefix=True,suffix=True,fragments=None)
         fragments = []
     ideal = [0]
     # Your solution here
-    ## BEGIN SOLUTION
-    i = 0
-    if prefix:
-        for j in range(i,len(peptide)):
-            s = 0
-            k = i
-            fragment = ""
-            while k < (i+j+1):
-                c = peptide[k]
-                s += a_mass[c]
-                fragment += c
-                k += 1
-            ideal.append(s)
-            fragments.append(fragment)
-    else:
-        j = len(peptide)-1
-    if suffix:
-        for i in range(1,len(peptide)):
-            s = 0
-            k = i
-            fragment = ""
-            while k < len(peptide):#(i+j+1):
-                c = peptide[k]
-                s += a_mass[c]
-                fragment+=c
-                k += 1
-            #for c in peptide[i:(i+j+1)]:
-            #    s += a_mass[c]
-            fragments.append(fragment)
-            ideal.append(s)        
-        
-    #print(peptide[i:(len(peptide)-j)])
-    ## END SOLUTION
     ideal.sort()
     return ideal
 
@@ -250,9 +202,6 @@ spectrum2 = ideal_spectrum(peptide1)
 fragments = []
 spectrum3 = ideal_spectrum("REDCA",fragments=fragments)
 
-## BEGIN SOLUTION
-answers["answer_exercise_2"] = ideal_spectrum("REDCA")
-## END SOLUTION
 print(f"Spectrum for {peptide1}")
 print(spectrum2)
 print(f"Fragments for REDCA")
@@ -290,32 +239,11 @@ def decoding_ideal_spectrum(spectrum,a_mass=a_mass,debug=False):
         show(G)
     # Your solution here
     matches = []
-    ## BEGIN SOLUTION
-    for path in nx.all_simple_paths(G,0,spectrum[-1]):
-        peptides = [""]
-        for i in range(len(path)-1):
-            a = G.get_edge_data(path[i],path[i+1])['label']
-            if "/" in a:
-                a1,a2 = a.split("/")
-                for i in range(len(peptides)):
-                    peptides.append(peptides[i]+a2)
-                    peptides[i] += a1
-            else:
-                for i in range(len(peptides)):
-                    peptides[i] += a
-        for peptide in peptides:
-            if np.all(ideal_spectrum(peptide,a_mass=a_mass)==[0]+spectrum):
-                matches.append(peptide)
-    #print(peptide[i:(len(peptide)-j)])
-    ## END SOLUTION
     return matches
 
 spectrum5 = [57,114,128,215,229,316,330,387,444]
 peptides5 = decoding_ideal_spectrum(spectrum5,debug=True)
 
-## BEGIN SOLUTION
-answers["answer_exercise_3"] = peptides5
-## END SOLUTION
 print(peptides5)
 
 
@@ -355,23 +283,10 @@ def construct_peptide_vector(peptide,a_mass={"X":4,"Z":5},verbose=False):
     total_mass = sum([a_mass[c] for c in peptide])
     vector = np.zeros((total_mass),dtype=int)
     # Your solution here
-    ## BEGIN SOLUTION
-    fragments=[]
-    index = ["" for _ in range(len(vector))]
-    spectrum = ideal_spectrum(peptide,a_mass=a_mass,suffix=False,fragments=fragments)
-    for i,m in enumerate(spectrum):
-        vector[m-1] = 1
-        index[m-1] = fragments[i-1]
-    if verbose:
-        return pd.Series(vector,index=index)
-    ## END SOLUTION
     return vector
 
 peptide_v1 = construct_peptide_vector("XZZXX")
 
-## BEGIN SOLUTION
-answers["answer_exercise_4"] = peptide_v1
-## END SOLUTION
 print(peptide_v1)
 display(construct_peptide_vector("XZZXX",verbose=True))
 
@@ -388,23 +303,11 @@ display(construct_peptide_vector("XZZXX",verbose=True))
 def construct_peptide_from_vector(p,a_mass={"X":4,"Z":5}):
     peptides = []
     # Your solution here
-    ## BEGIN SOLUTION
-    prefix_spectrum = list(np.where(p == 1)[0]+1)
-    suffix_spectrum = []
-    for m in prefix_spectrum:
-        suffix_spectrum.append(prefix_spectrum[-1]-m)
-    spectrum = prefix_spectrum + suffix_spectrum
-    spectrum = list(np.sort(spectrum))[1:]
-    peptides = decoding_ideal_spectrum(spectrum,a_mass=a_mass)
-    ## END SOLUTION
     return peptides
 
 p = np.array([0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1])
 peptides6 = construct_peptide_from_vector(p)
 
-## BEGIN SOLUTION
-answers["answer_exercise_5"] = peptides6
-## END SOLUTION
 peptides6
 
 
@@ -426,43 +329,11 @@ def max_peptide(s,a_mass={"X":4,"Z":5},debug=False):
             mass_a[mass] = []
         mass_a[mass].append(key)
     # Your solution here
-    ## BEGIN SOLUTION
-    G = nx.DiGraph()
-    s.insert(0,0)
-    for i,si in enumerate(s):
-        G.add_node("%d:%d"%(i,si))
-    masses = list(mass_a.keys())
-    for i,s1 in enumerate(s):
-        for j,s2 in enumerate(s):
-            if j-i in masses:
-                G.add_edge("%d:%d"%(i,s1),"%d:%d"%(j,s2),label="/".join(mass_a[j-i]))
-    if debug:
-        show(G)
-     
-    peptides = []
-    scores = []
-    for path in nx.all_simple_paths(G,"%d:%d"%(0,0),"%d:%d"%(len(s)-1,0)):
-        peptide = ""
-        pscore = 0
-        for i in range(len(path)-1):
-            ix,score = path[i].split(":")
-            pscore += int(score)
-            a = G.get_edge_data(path[i],path[i+1])['label']
-            peptide += a
-        peptides.append(peptide)
-        scores.append(pscore)
-
-    ix = np.argmax(scores)
-    peptide = peptides[ix]
-    ## END SOLUTION
     return peptide
 
 p2 = [0,0,0,4,-2,-3,-1,-7,6,5,3,2,1,9,3,-8,0,3,1,2,1,0]
 peptide7 = max_peptide(p2,debug=True)
 
-## BEGIN SOLUTION
-answers["answer_exercise_6"] = peptide7
-## END SOLUTION
 peptide7
 
 # + [markdown] slideshow={"slide_type": "subslide"}

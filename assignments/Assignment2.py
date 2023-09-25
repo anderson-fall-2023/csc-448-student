@@ -31,10 +31,6 @@
 # %load_ext autoreload
 # %autoreload 2
 
-## BEGIN SOLUTION
-import joblib
-answers = {}
-## END SOLUTION
 
 import pandas as pd
 import numpy as np
@@ -51,9 +47,6 @@ home = str(Path.home()) # all other paths are relative to this path.
 # ## Exercise 1
 
 # +
-## BEGIN SOLUTION
-answers["answer_exercise_1"] = Topic2_helper.greedy_lcs("AACCTTGG","ACACTGTGA")
-## END SOLUTION
 
 print(Topic2_helper.greedy_lcs("AACCTTGG","ACACTGTGA"))
 
@@ -63,9 +56,6 @@ print(Topic2_helper.greedy_lcs("AACCTTGG","ACAC"))
 # ## Exercise 2
 
 # +
-## BEGIN SOLUTION
-answers["answer_exercise_2"] = Topic2_helper.greedy_alignment("AACCTTGG","ACACTGTGA")
-## END SOLUTION
 
 print(Topic2_helper.greedy_alignment("AACCTTGG","ACACTGTGA"))
 print()
@@ -75,9 +65,6 @@ print(Topic2_helper.greedy_alignment("AACCTTGG","ACAC"))
 # ## Exercise 3
 
 # +
-## BEGIN SOLUTION
-answers["answer_exercise_3"] = Topic2_helper.min_num_coins(27,[6,5,1])
-## END SOLUTION
 
 Topic2_helper.min_num_coins(27,[6,5,1])
 # -
@@ -85,9 +72,6 @@ Topic2_helper.min_num_coins(27,[6,5,1])
 # ## Exercise 4
 
 # +
-## BEGIN SOLUTION
-answers["answer_exercise_4"] = Topic2_helper.min_num_coins_dynamic(27,[6,5,1])
-## END SOLUTION
 
 Topic2_helper.min_num_coins_dynamic(27,[6,5,1])
 # -
@@ -95,9 +79,6 @@ Topic2_helper.min_num_coins_dynamic(27,[6,5,1])
 # ## Exercise 5
 
 # +
-## BEGIN SOLUTION
-answers["answer_exercise_5"] = Topic2_helper.align("AACCT","ACACTG")
-## END SOLUTION
 
 score, aligned_s1, aligned_s2 = Topic2_helper.align("AACCT","ACACTG")
 print(score)
@@ -108,9 +89,6 @@ print(aligned_s2)
 # ## Exercise 6
 
 # +
-## BEGIN SOLUTION
-answers["answer_exercise_6"] = Topic2_helper.align_dynamic("AACCT","ACACTG")
-## END SOLUTION
 
 score = Topic2_helper.align_dynamic("AACCT","ACACTG")
 score
@@ -119,9 +97,6 @@ score
 # ## Exercise 7
 
 # +
-## BEGIN SOLUTION
-answers["answer_exercise_7"] = Topic2_helper.align_dynamic2("AACCT","ACACTG")
-## END SOLUTION
 
 score,s1_aligned,s2_aligned = Topic2_helper.align_dynamic2("AACCT","ACACTG")
 print(score)
@@ -137,9 +112,6 @@ s1="CGCAACCACAGCGCGCAGGGCAGGCGCGAGCTGTCTGAGCCCCGGCCTCGGACCGCCCACTGGACTCCCGGCACGC
 s2="CGCAACGGCAGCGCGCAGGGCAGGCGCGAGCTGGCCTCTGAGCCCCGGCCTCGGACCGCCCACTCCACGCCCGGCAGGCCCGGTGCCGCCTTCCGGCTCCAGTCCCCCCGC"
 score_1,aligned_s1_1,aligned_s2_1 = Assignment2_helper.align_dynamic3(s1,s2,match_score=1,mismatch_score=0,gap_score=0)
 score_2,aligned_s1_2,aligned_s2_2 = Assignment2_helper.align_dynamic3(s1,s2,match_score=2,mismatch_score=-3,gap_score=-1)
-## BEGIN SOLUTION
-answers["answer_exercise_8"] = score_1,score_2
-## END SOLUTION
 score_1,score_2
 
 # **Problem 1:** Now that you have implemented the function and verified that your score works, please consider the resulting alignments. Discuss how the gap, match, and mismatch penalty have changed the alignment. Feel free to experiment with other parameter values and sequences. Speculate on how a biologist would decide on the best match, mismatch, and penalties.
@@ -151,9 +123,6 @@ Assignment2_helper.print_alignment(aligned_s1_2,aligned_s2_2)
 # **Your answer here**
 
 # + slideshow={"slide_type": "skip"} hideCode=false hidePrompt=false
-## BEGIN SOLUTION
-joblib.dump(answers,"../tests/answers_Assignment2.joblib");
-## END SOLUTION
 # Don't forget to push!
 
 # + hideCode=false hidePrompt=false

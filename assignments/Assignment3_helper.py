@@ -68,75 +68,22 @@ def show(T):
 def composition(k,text):
     patterns = []
     # YOUR SOLUTION HERE
-    ## BEGIN SOLUTION
-    for i in range(0,len(text)-k+1):
-        patterns.append(text[i:(i+k)])
-    patterns.sort()
-    ## END SOLUTION
     return patterns
 
 def de_bruijn(patterns):
     dB = nx.MultiDiGraph()
     # dB.add_edge("AA","AT") # sample edge in case you want to run the code without implementing your solution
     # YOUR SOLUTION HERE
-    ## BEGIN SOLUTION
-    k = len(patterns[0])
-    for kmer in patterns:
-        prefix = kmer[:(k-1)]
-        suffix = kmer[1:]
-        dB.add_edge(prefix,suffix)
-    ## END SOLUTION
     return dB
 
 def eulerian_cycle(G,start=None):
     # YOUR SOLUTION HERE
     cycle = None
-    ## BEGIN SOLUTION
-    edges = {}
-    cnt = 0
-    for u,v in G.edges():
-        if u not in edges:
-            edges[u] = []
-        edges[u].append(v)
-        cnt += 1
-    if start is None:
-        start = list(edges.keys())[0]
-    cycle = [start]
-    current = start
-    ecnt = 0
-    while ecnt < cnt:
-        while True:
-            neighbors = edges[current]
-            if len(neighbors) > 0:
-                break
-            # we need to keep shifting until we get to a point that has unused portions
-            cycle = [cycle[-2]] + cycle[0:-2] + [cycle[-2]]
-            current = cycle[-1]
-            
-        current = neighbors.pop()
-        cycle.append(current)
-        ecnt += 1
-    while cycle[0] != start:
-        cycle = [cycle[-2]] + cycle[0:-2] + [cycle[-2]]
-    ## END SOLUTION
     return cycle
 
 def eulerian_path(G):
     # YOUR SOLUTION HERE
     path = []
-    ## BEGIN SOLUTION
-    in_out = calc_in_out(G)
-    diff = in_out["out"] - in_out["in"]
-    end = list(in_out.index[diff < 0])[0]
-    diff = in_out["in"] - in_out["out"]
-    start = list(in_out.index[diff < 0])[0]
-    G2 = copy.deepcopy(G)
-    G2.add_edge(end,start)
-    cycle = eulerian_cycle(G2)
-    while not (cycle[0] == start and cycle[-2] == end):
-        cycle = [cycle[-2]] + cycle[0:-2] + [cycle[-2]]
-    path = cycle[:-1]
-    ## END SOLUTION
     return path
 
 def reconstruct(kmers):
@@ -144,14 +91,6 @@ def reconstruct(kmers):
     path = eulerian_path(dB)
     text = ""
     # YOUR SOLUTION HERE
-    ## BEGIN SOLUTION
-    prefix = path.pop(0)
-    text = [prefix]
-    while len(path) > 0:
-        suffix = path.pop(0)
-        text.append(suffix[-1])
-    text = "".join(text)
-    ## END SOLUTION
     return text
 
 def read_fasta(file):
@@ -159,27 +98,6 @@ def read_fasta(file):
     headers = []
     # implement a read fasta file
     # YOUR SOLUTION HERE
-    ## BEGIN SOLUTION
-    f = open(file)
-    header = None
-    sequence = []
-    for line in f:
-        line = line.strip()
-        if line[0] == ">":
-            if header is not None:
-                headers.append(header)
-                seq = "".join(sequence)
-                seqs.append(seq.strip())
-                sequence = []
-            header = line
-        else:
-            sequence.append(line.strip())
-    if header is not None:
-        headers.append(header)
-        seq = "".join(sequence)
-        seqs.append(seq.strip())
-        sequence = []
-    ## END SOLUTION    
     return headers,seqs
 
 def align_dynamic2(s1,s2,match_score=1,mismatch_score=0,gap_score=0,verbose=False):
@@ -209,37 +127,18 @@ def align_dynamic2(s1,s2,match_score=1,mismatch_score=0,gap_score=0,verbose=Fals
             score_opt1 = -np.Inf # FIX THIS!
             s1_aligned_opt1 = "" # FIX THIS!
             s2_aligned_opt1 = "" # FIX THIS!
-            ## BEGIN SOLUTION
-            if scores.index[i][-1]==scores.columns[j][-1]: 
-                score = match_score
-            else:
-                score = mismatch_score
-            score_opt1 = scores.loc[opt1_s1,opt1_s2] + score
-            s1_aligned_opt1 = aligned.loc[opt1_s1,opt1_s2][0] + scores.index[i][-1]
-            s2_aligned_opt1 = aligned.loc[opt1_s1,opt1_s2][1] + scores.columns[j][-1]
-            ## END SOLUTION
             
             opt2_s1 = scores.index[i-1]
             opt2_s2 = scores.columns[j]
             score_opt2 = -np.Inf # FIT THIS!
             s1_aligned_opt2 = "" # FIX THIS!
             s2_aligned_opt2 = "" # FIX THIS!
-            ## BEGIN SOLUTION
-            score_opt2 = scores.loc[opt2_s1,opt2_s2]+gap_score
-            s1_aligned_opt2 = aligned.loc[opt2_s1,opt2_s2][0] + scores.index[i][-1]
-            s2_aligned_opt2 = aligned.loc[opt2_s1,opt2_s2][1] + "-"
-            ## END SOLUTION
             
             opt3_s1 = scores.index[i]
             opt3_s2 = scores.columns[j-1]
             score_opt3 = -np.Inf # FIT THIS!
             s1_aligned_opt3 = "" # FIX THIS!
             s2_aligned_opt3 = "" # FIX THIS!
-            ## BEGIN SOLUTION
-            score_opt3 = scores.loc[opt3_s1,opt3_s2]+gap_score
-            s1_aligned_opt3 = aligned.loc[opt3_s1,opt3_s2][0] + "-"
-            s2_aligned_opt3 = aligned.loc[opt3_s1,opt3_s2][1] + scores.columns[j][-1]
-            ## END SOLUTION
             
             scores.loc[scores.index[i],scores.columns[j]] = max(score_opt1,score_opt2,score_opt3)
             if max(score_opt1,score_opt2,score_opt3) == score_opt1:

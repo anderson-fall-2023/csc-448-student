@@ -22,10 +22,6 @@
 
 # + slideshow={"slide_type": "subslide"}
 # %matplotlib inline
-## BEGIN SOLUTION
-import joblib
-answers = {}
-## END SOLUTION
 # %load_ext autoreload
 # %autoreload 2
 
@@ -147,37 +143,6 @@ random_reversals = 320
 
 bins = [0. ,  27.8,  55.6,  83.4, 111.2, 139. , 166.8, 194.6, 222.4, 250.2, 278.]
 lens = [] # FILLING THIS OUT WITH THE LENGTHS OF YOUR BLOCKS IS WHAT AUTOGRADER NEEDS
-## BEGIN SOLUTION
-niters = 1000
-counts = np.zeros((niters,len(bins)-1))
-means = []
-lengths = []
-for iteration in range(niters):
-    cuts = []
-    for rev_i in range(random_reversals):
-        i = random.randint(0,len(chromosome))
-        j = random.randint(0,len(chromosome))
-        if i > j:
-            i,j = j,i
-        cuts.extend([i,j])
-    cuts = np.sort(cuts)
-    blocks = []
-    lens = []
-    prev_loc = 0
-    for i in range(len(cuts)):
-        blocks.append([prev_loc,cuts[i]])
-        lens.append(cuts[i]-prev_loc)
-        prev_loc = cuts[i]
-    lens.append(len(chromosome) - prev_loc)
-    blocks.append([prev_loc,len(chromosome)])
-    means.append(np.mean(lens))
-    lengths.append(len(lens))
-    counts[iteration,:],centers = np.histogram(lens,bins=bins)
-
-answers["exercise_1_means"] = counts.mean(axis=0)
-answers["exercise_1_stdevs"] = counts.std(axis=0)
-answers["exercise_1_num_blocks"] = round(np.mean(lengths))
-## END SOLUTION
 # YOUR SOLUTION HERE
 counts,centers = np.histogram(lens,bins=bins)
 counts
@@ -240,28 +205,12 @@ alt.Chart(pd.DataFrame({"count":counts,"length":bins[1:]})).mark_bar().encode(
 def greedy_sorting(P):
     P = P.copy()
     approx_rev_distance = 0
-    ## BEGIN SOLUTION
-    for k in P.index:
-        if P.loc[k] != k:
-            loc = int(np.where((P == k) | (P == -k))[0])
-            P.loc[k:(loc+1)] = list(-1*P.loc[k:(loc+1)])[::-1]
-                
-            approx_rev_distance += 1
-            if P.loc[k] == -k:
-                print("\t".join(P.astype(str)))
-                P.loc[k] = k
-                approx_rev_distance += 1
-        print("\t".join(P.astype(str)))
-    ## END SOLUTION
     # YOUR SOLUTION HERE
     return approx_rev_distance
             
 P_list = [1,-7,6,-10,9,-8,2,-11,-3,5,4]
 P = pd.Series(P_list,index=list(range(1,len(P_list)+1)))
 
-## BEGIN SOLUTION
-#answers["exercise_2"] = greedy_sorting(P)
-## END SOLUTION
 print("Target:")
 print("\t".join(P.index.astype(str)))
 print("Solution trace:")
@@ -320,15 +269,6 @@ print("Approximate reversal distance:",approx_rev_distance)
 def count_breakpoints(P):
     nbreakpoints = 0
     # YOUR SOLUTION HERE
-    ## BEGIN SOLUTION
-    if P.iloc[0] != P.index[0]:
-        nbreakpoints += 1
-    if P.iloc[-1] != P.index[-1]:
-        nbreakpoints += 1    
-    for i in range(len(P)-1):
-        if P.iloc[i+1] - P.iloc[i] != 1:
-            nbreakpoints += 1
-    ## END SOLUTION
     return nbreakpoints
 
 P_list2 = [3,4,5,-12,-8,-7,-6,1,2,10,9,-11,13,14]
@@ -337,10 +277,6 @@ nbreakpoints_P2 = count_breakpoints(P2)
 P_list3 = [3,4,5,-12,-8,-7,-6,1,2,10,9,-11,14,13]
 P3 = pd.Series(P_list3,index=list(range(1,len(P_list2)+1)))
 nbreakpoints_P3 = count_breakpoints(P3)
-## BEGIN SOLUTION
-answers["exercise_3_nbreakpoints_P2"] = nbreakpoints_P2
-answers["exercise_3_nbreakpoints_P3"] = nbreakpoints_P3
-## END SOLUTION
 nbreakpoints_P2,nbreakpoints_P3
 
 # + [markdown] slideshow={"slide_type": "slide"}
@@ -479,22 +415,9 @@ def get_color_edges_combined(Gcombined,color="red"):
 # + slideshow={"slide_type": "subslide"}
 def genome_to_graph(genome):
     G = nx.Graph()
-    ## BEGIN SOLUTION
-    for P in genome:
-        for i in range(len(P)):
-            G.add_node(-1*P.iloc[i])
-            G.add_node(P.iloc[i])
-            G.add_edge(P.iloc[i],-1*P.iloc[i],color='grey')
-        for i in range(len(P)-1):
-            G.add_edge(P.iloc[i],-P.iloc[i+1],color='red')
-        G.add_edge(P.iloc[i+1],-P.iloc[0],color='red')
-    ## END SOLUTION
     return G
 
 G = genome_to_graph([pd.Series([1,-2,-3,4]),pd.Series([5,6,7,8,9,10])])
-## BEGIN SOLUTION
-answers['exercise4_edge_list'] = to_edge_list(G)
-## END SOLUTION
 show(G)
 
 
@@ -514,25 +437,6 @@ show(G)
 # + slideshow={"slide_type": "subslide"}
 def combine(G,G2):
     Gcombined = nx.Graph()
-    ## BEGIN SOLUTION
-    nodes = list(G.nodes())
-    for i in range(len(nodes)):
-        n1 = nodes[i]
-        for j in range(i+1,len(nodes)):
-            n2 = nodes[j]
-            if n1 != -n2:
-                if G2.has_edge(n1,n2) and G.has_edge(n1,n2):
-                    Gcombined.add_edge(n1,n2,color="purple")
-                elif G.has_edge(n1,n2):
-                    Gcombined.add_edge(n1,n2,color="red")
-                elif G2.has_edge(n1,n2):
-                    Gcombined.add_edge(n1,n2,color="blue")
-            else:
-                if G.has_edge(n1,n2):
-                    Gcombined.add_edge(n1,n2,color='grey')
-                else:
-                    Gcombined.add_edge(n2,n1,color='grey')
-    ## END SOLUTION
     return Gcombined
 
 P4_list = [1,-2,-3,4]
@@ -541,9 +445,6 @@ P5_list = [1,3,2,-4]
 P5 = pd.Series(P5_list)
 
 G_P4_P5 = combine(genome_to_graph([P4]),genome_to_graph([P5]))
-## BEGIN SOLUTION
-answers['exercise5_edge_list'] = to_edge_list(G_P4_P5)
-## END SOLUTION
 show_combined(G_P4_P5)
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -628,20 +529,9 @@ show(G4,G5,P_G=G4)
 # + slideshow={"slide_type": "subslide"}
 def cycles(G,G2):
     nalt_cycles = 0
-    ## BEGIN SOLUTION
-    Gcombined = combine(G,G2)
-    for edge in list(Gcombined.edges()):
-        if edge[0] == -edge[1]:
-            Gcombined.remove_edge(edge[0],edge[1])
-    sub_graphs = connected_component_subgraphs(Gcombined) #[Gcombined.subgraph(c).copy() for c in nx.connected_components(Gcombined)] #nx.connected_component_subgraphs(Gcombined)
-    nalt_cycles = len(list(sub_graphs))
-    ## END SOLUTION
     return nalt_cycles
 
 ncycles = cycles(genome_to_graph([P4]),genome_to_graph([P5]))
-## BEGIN SOLUTION
-answers['exercise6_ncycles'] = ncycles
-## END SOLUTION
 ncycles
 
 
@@ -656,15 +546,9 @@ ncycles
 
 # + slideshow={"slide_type": "subslide"}
 def blocks(G):
-    ## BEGIN SOLUTION
-    return round(len(list(G.nodes()))/2)
-    ## END SOLUTION
     return 0
 
 nblocks = blocks(genome_to_graph([P5]))
-## BEGIN SOLUTION
-answers['exercise6_nblocks'] = nblocks
-## END SOLUTION
 nblocks
 
 
@@ -679,9 +563,6 @@ nblocks
 
 # + slideshow={"slide_type": "subslide"}
 def two_break_distance(G,G2):
-    ## BEGIN SOLUTION
-    return blocks(G) - cycles(G,G2)
-    ## END SOLUTION
     # YOUR SOLUTION HERE
     return 0
 
@@ -693,9 +574,6 @@ P8_list = [2,-4]
 P8 = pd.Series(P8_list)
 
 distance = two_break_distance(genome_to_graph([P6]),genome_to_graph([P7,P8]))
-## BEGIN SOLUTION
-answers['exercise7_distance'] = distance
-## END SOLUTION
 distance
 
 # + [markdown] slideshow={"slide_type": "subslide"}
@@ -737,21 +615,6 @@ def get_color(sub_graph,edge):
 def red_blue_cycle_check(sub_graph,cycle):
     checked_cycle = None
     colors = []
-    ## BEGIN SOLUTION
-    last_color = get_color(sub_graph,cycle[0])
-    if last_color == 'grey':
-        return None,None
-    colors.append(last_color)
-    for edge in cycle[1:]:
-        color = get_color(sub_graph,edge)
-        colors.append(color)
-        if color == 'grey':
-            return None,None
-        if color == last_color:
-            return None,None
-        last_color = color
-    checked_cycle = cycle
-    ## END SOLUTION
     return checked_cycle,colors
 
 G_P4_P5 = combine(genome_to_graph([P4]),genome_to_graph([P5]))
@@ -774,9 +637,6 @@ for edge_cycle in edge_cycles:
     
 test_edge_cycle = [[1, -3], [-3, -4], [-4, -1], [-1, 4], [4, 2], [2, 1]]
 checked_cycle, colors = red_blue_cycle_check(G_P4_P5,test_edge_cycle)
-## BEGIN SOLUTION
-answers['exercise8_colors'] = colors
-## END SOLUTION
 print(checked_cycle)
 print(colors)
 
@@ -815,55 +675,12 @@ def shortest_rearrangement_scenario(P,Q):
     plt.subplot(distance+1, 2, c); c+=1
     show(G_P)#,P_G=Gcombined)
     first = True
-    ## BEGIN SOLUTION
-    while True:
-        sub_graphs = connected_component_subgraphs(Gcombined)
-        for sub_graph in sub_graphs:
-            red_blue_cycle = None
-            for cycle in nx.simple_cycles(sub_graph.to_directed()):
-                edge_cycle = []
-                a = cycle[0]
-                for b in cycle[1:]:
-                    edge_cycle.append([a,b])
-                    a = b
-                edge_cycle.append([b,cycle[0]])
-                red_blue_cycle,colors = red_blue_cycle_check(sub_graph,edge_cycle)
-                if red_blue_cycle is not None:
-                    break
-            if red_blue_cycle is None:
-                return steps
-            ix = colors.index('blue')
-            #if first:
-            #    ix = 4
-            #    print(red_blue_cycle)
-            #    first = False
-            i1,i2 = red_blue_cycle[ix-1]
-            i3,i4 = red_blue_cycle[ix+1]
-        Gcombined.remove_edge(i1,i2)
-        Gcombined.remove_edge(i3,i4)
-        if i1 != -i4:
-            Gcombined.add_edge(i1,i4,color='red')
-        if i2 != -i3:
-            Gcombined.add_edge(i2,i3,color='purple')
-        two_break_on_genome_graph(G_P,i1,i2,i3,i4)
-        plt.subplot(distance+1, 2, c); c+=1
-        show_combined(Gcombined,show_grey=False)
-        plt.subplot(distance+1, 2, c); c+=1
-        show(G_P)#,P_G=Gcombined)
-        steps.append(print_from_graph(G_P))
-    ## END SOLUTION
     return steps
         
 steps = shortest_rearrangement_scenario([pd.Series([1,-2,-3,4])],[pd.Series([1,2,-4,-3])])
-## BEGIN SOLUTION
-answers['exercise9_last_step'] = steps[-1]
-## END SOLUTION
 steps
 
 # + slideshow={"slide_type": "skip"}
-## BEGIN SOLUTION
-joblib.dump(answers,"../tests/answers_Lab7.joblib");
-## END SOLUTION
 # Don't forget to push!
 # -
 
